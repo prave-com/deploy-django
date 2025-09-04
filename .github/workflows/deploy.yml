@@ -1,0 +1,37 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.2.2
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            set -euo pipefail
+            export PATH="$HOME/.local/bin:$PATH"
+            cd /var/www/maestrob2b-backend
+            echo ">>> Fetching latest code..."
+            git fetch origin main
+            git reset --hard origin/main
+            echo ">>> Activating venv..."
+            source .venv/bin/activate
+            echo ">>> Sync dependencies..."
+            uv sync
+            echo ">>> Applying migrations..."
+            python manage.py migrate --noinput
+            echo ">>> Collecting static files..."
+            python manage.py collectstatic --noinput
+            echo ">>> Restarting service..."
+            sudo systemctl daemon-reload
+            sudo systemctl restart maestrob2b-backend

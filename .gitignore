@@ -1,0 +1,9 @@
+.ruff_cache
+.venv/
+__pycache__/
+.env
+*.pyc
+*.pyo
+staticfiles/
+media/
+.DS_Store
