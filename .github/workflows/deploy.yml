@@ -20,7 +20,7 @@ jobs:
           script: |
             set -euo pipefail
             export PATH="$HOME/.local/bin:$PATH"
-            cd /var/www/maestrob2b-backend
+            cd /var/www/deploy-django
             echo ">>> Fetching latest code..."
             git fetch origin main
             git reset --hard origin/main
@@ -34,4 +34,4 @@ jobs:
             python manage.py collectstatic --noinput
             echo ">>> Restarting service..."
             sudo systemctl daemon-reload
-            sudo systemctl restart maestrob2b-backend
+            sudo systemctl restart deploy-django
