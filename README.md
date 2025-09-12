@@ -119,7 +119,7 @@ WantedBy=multi-user.target
 
 ## 8. Configure Nginx
 
-Create config file:
+Create config file, change `example.com` with your domain or VPS IP address:
 
 ```bash
 sudo nano /etc/nginx/sites-available/example.com
@@ -133,15 +133,15 @@ server {
     server_name example.com;
 
     location /static/ {
-        alias /var/www/project-name/staticfiles/;
+        alias /var/www/deploy-django/staticfiles/;
     }
 
     location /media/ {
-        alias /var/www/project-name/media/;
+        alias /var/www/deploy-django/media/;
     }
 
     location / {
-        proxy_pass http://unix:/var/www/project-name/project-name.sock;
+        proxy_pass http://unix:/var/www/deploy-django/deploy-django.sock;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -156,7 +156,7 @@ Enable the site:
 sudo ln -s /etc/nginx/sites-available/example.com /etc/nginx/sites-enabled/
 ```
 
-> To enable HTTPS with Let’s Encrypt:
+> To enable HTTPS with Let’s Encrypt, if you don't have domain, skip this:
 
 ```bash
 sudo certbot --nginx -d example.com
