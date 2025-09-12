@@ -261,17 +261,17 @@ sudo systemctl start deploy-django
    - `VPS_USER` → SSH user
    - `VPS_SSH_KEY` → private key in your local computer (`~/.ssh/id_ed25519`)
 
-Add to GitHub repository secrets https://github.com/prave-com/deploy-django/settings/secrets/actions.
+   Add to GitHub repository secrets https://github.com/prave-com/deploy-django/settings/secrets/actions.
 
 2. Generate deploy key:
+
+   Paste public key to https://github.com/prave-com/deploy-django/settings/keys.
 
 ```bash
 ssh-keygen -t rsa -b 4096 -C "deploy@deploy-django" -f ~/.ssh/github_deploy_django_rsa
 cat ~/.ssh/github_deploy_django_rsa.pub
 chmod 600 ~/.ssh/github_deploy_django_rsa
 ```
-
-Paste public key to https://github.com/prave-com/deploy-django/settings/keys.
 
 3. Configure SSH:
 
