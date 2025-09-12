@@ -113,7 +113,7 @@ RestartSec=5
 WantedBy=multi-user.target
 ```
 
-> ⚠️ In this configuration, there is `config.wsgi:application`. Change the `config` with your directory name, where the `wsgi.py` located.
+> ⚠️ In this configuration, there is `config.wsgi:application` in `ExecStart`. Change the `config` with your directory name, where the `wsgi.py` located.
 
 ---
 
